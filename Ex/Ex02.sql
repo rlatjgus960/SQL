@@ -1,148 +1,88 @@
---NULL
-SELECT first_name, salary, commission_pct, salary*commission_pct
-FROM employees
-WHERE salary BETWEEN 13000 AND 15000;
+--문제1
+--전체직원의 다음 정보를 조회하세요. 정렬은 입사일(hire_date)의 올림차순(ASC)으로 가장 선임부터 출력이 되도록 하세요. 
+--이름(first_name last_name),  월급(salary),  전화번호(phone_number), 입사일(hire_date) 순서이고 “이름”, “월급”, “전화번호”, “입사일” 로 컬럼이름을 대체해 보세요.
 
-
-select first_name, salary, commission_pct
+select  first_name 이름,
+        salary 월급,
+        phone_number 전화번호,
+        hire_date 입사일
 from employees
-where commission_pct is null;
+order by hire_date asc;
 
---예제) 커미션 비율이 있는 사원의 이름, 연봉, 커미션 비율을 출력하세요
-select first_name, salary, commission_pct
+--문제2.
+--업무(jobs)별로 업무이름(job_title)과 최고월급(max_salary)을 월급의 내림차순(DESC)로 정렬하세요.
+select job_title, max_salary
+from jobs
+order by max_salary desc;
+
+
+--문제3.
+--담당 매니저가 배정되어있으나 커미션비율이 없고, 월급이 3000초과인 직원의 이름, 매니저아이디, 커미션 비율, 월급 을 출력하세요.
+select first_name, manager_id,commission_pct, salary
 from employees
-where commission_pct is not null;
+where manager_id is not null
+and commission_pct is null
+and salary > 3000;
 
---예제) 담당매니저가 없고 커미션 비율이 없는 직원의 이름을 출력하세요
-select first_name
+
+--문제4.
+--최고월급(max_salary)이 10000 이상인 업무의 이름(job_title)과 최고월급(max_salary)을 최고월급의(max_salary) 내림차순(DESC)로 정렬하여 출력하세요.    
+select job_title, max_salary
+from jobs
+where max_salary >= 10000
+order by max_salary desc;
+
+
+--문제5.
+--월급이 14000 미만 10000 이상인 직원의 이름(first_name), 월급, 커미션퍼센트를 월급순(내림차순) 출력하세오. 단 커미션퍼센트 가 null 이면 0 으로 나타내시오
+select  first_name, 
+        salary, nvl(commission_pct, 0)
 from employees
-where commission_pct is null 
-and manager_id is null;
-
-
---order by
-select first_name, salary
-from employees
-order by salary desc; --내림차순
-
-select first_name, salary
-from employees
-order by salary asc; --오름차순
-
-select first_name, salary
-from employees
-order by salary asc, first_name asc; --오름차순
-
---부서번호를 오름차순으로 정렬하고 부서번호, 급여, 이름을 출력하세요
-select department_id, salary, first_name
-from employees
-order by department_id asc;
-
---급여가 10000 이상인 직원의 이름 급여를 급여가 큰직원부터 출력하세요
-select first_name, salary
-from employees
-where salary >=10000
+where salary between 10000 and 14000
 order by salary desc;
 
 
---부서번호를 오름차순으로 정렬하고 부서번호가 같으면 급여가 높은 사람부터 부서번호 급여 이름을 출력하세요  
-select department_id, salary, first_name
+--문제6.
+--부서번호가 10, 90, 100 인 직원의 이름, 월급, 입사일, 부서번호를 나타내시오. 입사일은 1977-12 와 같이 표시하시오
+select  first_name, 
+        salary, 
+        to_char(hire_date, 'yyyy-mm'), 
+        department_id 
 from employees
-order by department_id asc, salary desc; 
+where department_id = 10
+or department_id = 90
+or department_id = 100;
 
 
-/*단일행 함수*/
---가상의 테이블 dual
-select initcap('aaaaa')
-from dual;
-
---initcap() : 첫글자만 대문자, 나머지 소문자로
-select email, initcap(email), department_id 
+--문제7.
+--이름(first_name)에 S 또는 s 가 들어가는 직원의 이름, 월급을 나타내시오
+select first_name, salary
 from employees
-where department_id = 100;
+where first_name like '%S%'
+or first_name like '%s%';
 
---lower(), upper()
-select first_name, lower(first_name), upper(first_name)
-from employees
-where department_id = 100;
 
---substr(항목, 시작위치, 출력할 글자수)
-select substr('abcdefg', 3, 3) 
-from dual;
+--문제8.
+--전체 부서를 출력하려고 합니다. 순서는 부서이름이 긴 순서대로 출력해 보세오.
+select *
+from departments
+order by length(department_name) desc;
 
-select first_name, substr(first_name, 1, 3), substr(first_name, -3, 3)
-from employees
-where department_id = 100;
 
---lpad() rpad()
-select first_name,
-       lpad(first_name, 10, '*'),
-       rpad(first_name, 10, '*')
-from employees;
 
---replace()
+--문제9.
+--정확하지 않지만, 지사가 있을 것으로 예상되는 나라들을 나라이름을 대문자로 출력하고 올림차순(ASC)으로 정렬해 보세오.
+select INITCAP(country_name)
+from countries
+order by country_name asc;
+
+
+
+--문제10.
+--입사일이 03/12/31 일 이전 입사한 직원의 이름, 월급, 전화 번호, 입사일을 출력하세요. 전화번호는 545-343-3433 과 같은 형태로 출력하시오.
 select  first_name,
-        replace(first_name, 'a', '*'),
-        replace(first_name, substr(first_name, 2, 3), '***')
-from employees;
-
-select first_name, substr(first_name, 2, 3)
-from employees;
-
-/*숫자함수*/
---round 반올림
-select  round(123.346, 2) r2,
-        round(123.346, 0) r0, --소수점에서 반올림
-        round(123.346, -1) "r-1" --1의자리에서 반올림(정수부분)
-from dual;
-
---trunc 버림
-select  trunc(123.456, 2),
-        trunc(123.956, 0),
-        trunc(123.456, -1)
-from dual;
-
-/*날짜 함수*/
-select sysdate
-from dual;
-
---MONTHS_BETWEEN(d1, d2)
-select  sysdate,
-        hire_date,
-        round(MONTHS_BETWEEN(SYSDATE,hire_date),0)
-from employees;
-
-/*변환함수*/
-select first_name, salary*12, to_char(salary*12, '$999,999.99') --형식 입력
+        salary, 
+        replace(phone_number, '.', '-'), 
+        hire_date
 from employees
-where department_id = 110;
-
-select  to_char(9876, '99999'),
-        to_char(9876, '099999'),
-        to_char(9876, '$99999'),
-        to_char(9876, '9999.99'),
-        to_char(9876, '99,999')
-from dual;
-
---to_char() 날짜 --> 문자열
-select  sysdate, 
-        to_char(sysdate, 'YYYY-MM-DD HH:MI:SS'),
-        to_char(sysdate, '"YYYY년" "MM월" "DD일"'),
-
-        to_char(sysdate, 'YYYY'),
-        to_char(sysdate, 'YY'),
-        to_char(sysdate, 'MM'),
-        to_char(sysdate, 'MON'),
-        to_char(sysdate, 'DAY'),
-        to_char(sysdate, 'HH'),
-        to_char(sysdate, 'HH24'),
-        to_char(sysdate, 'MI'),
-        to_char(sysdate, 'SS')
-from dual;
-
---nvl() nvl2()
-select  first_name,
-        commission_pct,
-        nvl(commission_pct, 0),
-        nvl2(commission_pct, 100, 0)
-from employees;
+where hire_date <= '03/12/31'
