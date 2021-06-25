@@ -128,3 +128,19 @@ select  employee_id,
                     'ST_CLERK', salary+salary*0.3,
             salary) as rSalary
 from employees
+
+
+--Join
+select *
+from employees;
+
+select * 
+from departments;
+
+select  first_name, 
+        hire_date,
+        department_name,
+        em.department_id,
+        de.manager_id
+from employees em, departments de
+where em.department_id = de.department_id; -->서로 연결해주기 
