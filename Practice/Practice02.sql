@@ -71,8 +71,8 @@ order by avg(salary) desc;
 select  first_name,
         hire_date,
         case when hire_date < '03-01-01' then '창립멤버'
-             when hire_date between '03-01-01' and '04-01-01' then '03년입사'
-             when hire_date between '04-01-01' and '05-01-01' then '04년입사'
+             when hire_date between '03-01-01' and '03-12-31' then '03년입사'
+             when hire_date between '04-01-01' and '04-12-31' then '04년입사'
              else '상장이후입사'
         end optDate
 from employees
