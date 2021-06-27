@@ -106,6 +106,19 @@ from employees
 group by department_id
 having sum(salary)>= 20000;
 
+
+/*
+select  문
+    select 절
+    from 절
+    where 절
+    group by 절
+    having 절
+    order by 절
+*/
+
+
+
 --case ~ end 문
 select employee_id, 
             job_id, 
