@@ -103,7 +103,8 @@ and de.manager_id = em.employee_id;
 --문제9.
 select  em.employee_id,
         em.first_name,
-        em.department_id,
+        de.department_name,
         ma.first_name
-from employees em, employees ma
-where em.manager_id = ma.employee_id;
+from employees em, employees ma, departments de
+where em.manager_id = ma.employee_id
+and em.department_id = de.department_id(+);
