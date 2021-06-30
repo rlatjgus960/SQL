@@ -63,14 +63,14 @@ insert into book values (seq_book_id.nextval, '순정만화', '재미주의', '2
 insert into book values (seq_book_id.nextval, '오직두사람', '문학동네', '2017/05/04', 6);
 insert into book values (seq_book_id.nextval, '26년', '재미주의', '2012/02/04', 5);
 
+commit;
+
 --select문(조인)
 select *
 from book bo, author au
 where bo.author_id = au.author_id;
 
-
-
----------------------------------------------
+--------------------------------------------------------------------------------------
 
 --author_desc 정보 변경 - 강풀의 author_desc 정보를 ‘서울특별시’ 로 변경해 보세요
 update author
