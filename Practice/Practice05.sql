@@ -20,6 +20,7 @@ where (department_id, salary) in (select department_id, max(salary)
                                   from employees
                                   group by department_id);
 
+                                  
 
 --문제3.
 select  ma.manager_id,
