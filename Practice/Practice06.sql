@@ -71,7 +71,7 @@ from book bo, author au
 where bo.author_id = au.author_id;
 
 --------------------------------------------------------------------------------------
-
+ 
 --author_desc 정보 변경 - 강풀의 author_desc 정보를 ‘서울특별시’ 로 변경해 보세요
 update author
 set author_desc = '서울특별시'
