@@ -46,6 +46,7 @@ create table book(
     primary key(book_id),
     constraint book_fk foreign key (author_id)
     references author(author_id)
+    on delete cascade
 );
 --book 관련 시퀀스 만들기
 create sequence seq_book_id
